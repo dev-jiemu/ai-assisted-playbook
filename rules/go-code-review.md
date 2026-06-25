@@ -13,6 +13,18 @@
 - **Slice/Map Initialization:** 가능한 경우 `make(map[T]T, hint)`나 `make([]T, 0, cap)`을 사용하여 Slice/Map의 Cap(용량)을 미리 할당했는지 확인할 것.
 - **Goroutine Lifetimes:** 고루틴(`go func()`)을 생성할 때, 해당 고루틴이 언제, 어떻게 종료되는지(Context 활용 등) 누수(Leak) 가능성을 철저히 검증할 것.
 
+### 1-1. 네이밍 규칙 (공통 규약 적용)
+프로젝트 공통 네이밍 규칙(CLAUDE.md)을 Go 관용구에 맞춰 적용한다:
+- **코드 내부**의 식별자는 Go 관례를 따른다: unexported는 camelCase, exported는 PascalCase. (Go는 exported 식별자가 반드시 대문자로 시작해야 하므로 "내부 변수=camelCase" 규칙은 unexported 스코프에 해당)
+- **외부와 데이터를 주고받는 필드**(JSON/메시지 등)는 와이어 포맷이 **snake_case**여야 한다. 단, Go 필드명 자체는 snake_case로 쓰지 말고 **struct tag로 매핑**할 것:
+  ```go
+  type User struct {
+      UserID    int    `json:"user_id"`
+      CreatedAt string `json:"created_at"`
+  }
+  ```
+- 필드를 `User_ID`처럼 직접 snake/혼합 케이스로 선언하는 것은 🟡 WARNING. 태그 없이 exported 필드를 그대로 내보내 와이어에서 PascalCase가 노출되는 것도 경고 대상.
+
 ### 2. 중요도 분류 (Severity)
 지적 사항은 반드시 아래 3가지 레벨로 분류하여 태그를 붙여라:
 - 🔴 **[CRITICAL]:** 데이터 레이스(Data Race), 고루틴 누수, 패닉(Panic) 가능성, 자원 해제(defer) 누락 등 시스템 장애를 유발하는 경우 (반드시 수정 필요)

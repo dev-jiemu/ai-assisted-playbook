@@ -25,6 +25,7 @@
 - **Error Handling:** 새로 작성된 에러 메시지가 소문자로 시작하는가? `fmt.Errorf("...: %w", err)` 형식을 잘 갖추었는가?
 - **Slice/Map Initialization:** 새롭게 선언된 Slice/Map에 가능하면 `make` 힌트(cap)가 제공되었는가?
 - **Goroutine Lifetimes:** 새로 생성된 고루틴(`go func()`)이 있다면 Context 등으로 종료 조건이 명시되었는가?
+- **Naming(공통):** 변경된 코드에서 내부 식별자는 camelCase/PascalCase(Go 관례)인가? 외부 전송 필드의 snake_case가 필드명이 아닌 struct tag(`json:"snake_case"`)로 매핑되었는가?
 
 ### 2. 중요도 분류 (Severity)
 지적 사항은 반드시 아래 3가지 레벨로 분류하여 태그를 붙여라:
