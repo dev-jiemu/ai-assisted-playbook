@@ -34,6 +34,7 @@
 `skills/`는 Claude Code가 `description`을 보고 필요할 때 자동 호출한다. 수동 안내가 필요한 경우 목록:
 
 - `legacy-analysis` — 레거시 코드베이스 구조·배포 분석 문서화 (Mermaid)
+- `architecture-intent` — 특정 코드/아키텍처의 설계 의도, 시각화, 트레이드오프(이점/문제점) 분석
 - `pr-writer` — GitHub PR/Issue 본문 작성
 - `dev-summary` — 대화·작업 내용 개발 문서형 요약본
 - `troubleshooting-report` — 에러 디버깅 과정을 트러블슈팅 리포트로 정리
