@@ -37,6 +37,7 @@
 - `architecture-intent` — 특정 코드/아키텍처의 설계 의도, 시각화, 트레이드오프(이점/문제점) 분석
 - `pr-writer` — GitHub PR/Issue 본문 작성
 - `dev-summary` — 대화·작업 내용 개발 문서형 요약본
+- `tdd-feature` — TDD 기반 안전 개발 및 리팩토링
 - `troubleshooting-report` — 에러 디버깅 과정을 트러블슈팅 리포트로 정리
 
 ## 산출물 규칙
