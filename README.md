@@ -40,7 +40,7 @@ ln -sf "$PWD/CLAUDE.md"  ~/.claude/CLAUDE.md
 
 # skills (개별 스킬을 ~/.claude/skills/ 아래로 연동)
 mkdir -p ~/.claude/skills
-ln -sf "$PWD"/skills/*   ~/.claude/skills/
+ln -sf "$PWD/skills" ~/.claude/skills
 
 # rules (CLAUDE.md가 상대경로로 참조하므로 함께 연동)
 ln -sf "$PWD/rules"      ~/.claude/rules
