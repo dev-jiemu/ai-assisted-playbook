@@ -40,6 +40,10 @@
 
 ## 산출물 규칙
 
-- 코드 리뷰 결과는 `YYYYMMDD-code-review.md` 형태로 저장한다.
-- 레거시 분석 산출물은 `docs/analysis/` 하위에 생성한다.
-- 다이어그램은 마크다운에서 바로 렌더링되도록 **Mermaid**로 작성한다.
+- **모든 생성 파일의 기본 경로**: 별도 지시가 없는 한 **현재 작업 중인 프로젝트 루트 기준 디렉터리**에 생성한다. (`/tmp`, `/private/tmp` 등 OS 임시 경로 생성 절대 금지)
+- **문서 저장 위치**:
+  - 리뷰/요약/보고서 등 일반 문서: 프로젝트 루트의 `docs/` 폴더 하위에 생성 (필요 시 `docs/reviews/`, `docs/summary/` 등 세부 분류)
+  - 레거시 분석 산출물: `docs/analysis/` 하위에 생성
+- **파일명 규칙**:
+  - 코드 리뷰 결과: `docs/reviews/YYYYMMDD-code-review.md` (또는 `docs/YYYYMMDD-code-review.md`)
+- **다이어그램**: 마크다운 내에서 바로 렌더링되도록 **Mermaid**로 작성한다.
