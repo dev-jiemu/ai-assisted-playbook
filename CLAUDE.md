@@ -41,6 +41,7 @@
 - `edge-case-analysis` — 코드가 특정 상황, 환경에 생길 수 있는 예외상황 검토
 - `troubleshooting-report` — 에러 디버깅 과정을 트러블슈팅 리포트로 정리
 - `data-flow-impact` — 로직 변경시 데이터 흐름 변화를 리포트로 정리
+- `scenario-impact-analysis` — 특정 엔드포인트, 변수값의 시간별 흐름 변화 분석
 
 ## 산출물 규칙
 
