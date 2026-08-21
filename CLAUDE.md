@@ -43,6 +43,7 @@
 - `data-flow-impact` — 로직 변경시 데이터 흐름 변화를 리포트로 정리
 - `scenario-impact-analysis` — 특정 엔드포인트, 변수값의 시간별 흐름 변화 분석
 - `architecture-design-note` — 아키텍처 설계 디자인 연습하는 내역 정리하는 스킬
+- `sort-json-logs` — JSON 기반의 로그를 시간순으로 정렬하는 스킬
 
 ## 산출물 규칙
 
