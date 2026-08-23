@@ -44,6 +44,7 @@
 - `scenario-impact-analysis` — 특정 엔드포인트, 변수값의 시간별 흐름 변화 분석
 - `architecture-design-note` — 아키텍처 설계 디자인 연습하는 내역 정리하는 스킬
 - `sort-json-logs` — JSON 기반의 로그를 시간순으로 정렬하는 스킬
+- `cs-study-note` — CS 지식 공부하다 정리가 필요할 경우 정리용 스킬
 
 ## 산출물 규칙
 
