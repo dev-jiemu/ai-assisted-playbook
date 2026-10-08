@@ -12,11 +12,7 @@ Claude Code 전역 프롬프트/지침 백업. `~/.claude/`에 연동해서 사�
 │   ├── go-diff-review.md          #  - Git Diff / PR 변경분 리뷰 (Go)
 │   ├── java-code-review.md        #  - Java 코드 전체 리뷰
 │   └── typescript-code-review.md  #  - TypeScript 코드 전체 리뷰
-└── skills/                        # 필요할 때 불러오는 작업 절차
-    ├── legacy-analysis/SKILL.md   #  - 레거시 코드베이스 분석 문서화
-    ├── pr-writer/SKILL.md         #  - GitHub PR/Issue 본문 작성
-    ├── dev-summary/SKILL.md       #  - 작업 내용 요약본
-    └── troubleshooting-report/SKILL.md  # - 트러블슈팅 리포트
+└── skills/<name>/SKILL.md          # 필요할 때 불러오는 작업 절차 (목록은 CLAUDE.md "스킬" 섹션)
 ```
 
 ### 자동 로딩 메커니즘
@@ -25,7 +21,7 @@ Claude Code 전역 프롬프트/지침 백업. `~/.claude/`에 연동해서 사�
 | --- | --- |
 | `CLAUDE.md` | 세션 시작 시 항상 로드 |
 | `skills/*/SKILL.md` | frontmatter의 `description`을 보고 관련 요청일 때 자동 호출 |
-| `rules/` | **자동 탐색 안 됨.** `CLAUDE.md`의 라우팅에 따라 필요 시 직접 읽음 |
+| `rules/` | `~/.claude/rules/`에 연동되면 user-level rule로 로드. 각 파일의 `paths` frontmatter로 해당 언어 파일을 다룰 때만 로드되며, 그 외에는 `CLAUDE.md` 라우팅에 따라 직접 읽음 |
 
 ## 전역 폴더 연동
 

@@ -20,7 +20,7 @@
 
 ## 룰 라우팅 (Rules)
 
-`rules/` 폴더는 Claude Code가 자동 탐색하지 않으므로, 아래 조건에 해당하면 **해당 파일을 직접 읽고 그 지침을 따른다.**
+`rules/` 파일은 `~/.claude/rules/`에 연동되어 `paths` frontmatter에 맞는 파일을 다룰 때 자동 로드된다. 아래 요청인데 아직 로드되지 않았다면 해당 파일을 직접 읽고 따른다.
 
 - **Go 코드 전체 리뷰/검수/리팩토링** 요청 → `rules/go-code-review.md` (Uber Go Style Guide)
 - **Java 코드 전체 리뷰/검수/리팩토링** 요청 → `rules/java-code-review.md` (Google Java Style + Effective Java)

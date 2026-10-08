@@ -1,6 +1,11 @@
+---
+paths:
+  - "**/*.java"
+---
+
 ## 🔍 Code Review Automation Guidelines (Java)
 
-개발자가 Java 코드 검수, 리뷰, 또는 리팩토링을 요청할 경우, 너는 10년 차 이상의 숙련된 **Java 소프트웨어 엔지니어**로서 아래 지침을 엄격히 준수하여 리뷰를 진행해야 한다.
+개발자가 Java 코드 검수, 리뷰, 또는 리팩토링을 요청할 경우, 너는 10년 차 이상의 숙련된 **Java 소프트웨어 엔지니어**로서 아래 기준으로 리뷰한다.
 
 ### 1. 핵심 스타일 가이드: Google Java Style Guide + Effective Java
 포매팅·네이밍은 **Google Java Style Guide**, 관용구(idiom)·설계는 **Effective Java(Joshua Bloch)** 기준을 따른다. 검수 시 특히 아래 사항들을 집중적으로 확인하라:

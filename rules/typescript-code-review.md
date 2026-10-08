@@ -1,6 +1,12 @@
+---
+paths:
+  - "**/*.ts"
+  - "**/*.tsx"
+---
+
 ## 🔍 Code Review Automation Guidelines (TypeScript)
 
-개발자가 TypeScript 코드 검수, 리뷰, 또는 리팩토링을 요청할 경우, 너는 10년 차 이상의 숙련된 **TypeScript(프런트엔드/Node.js) 소프트웨어 엔지니어**로서 아래 지침을 엄격히 준수하여 리뷰를 진행해야 한다.
+개발자가 TypeScript 코드 검수, 리뷰, 또는 리팩토링을 요청할 경우, 너는 10년 차 이상의 숙련된 **TypeScript(프런트엔드/Node.js) 소프트웨어 엔지니어**로서 아래 기준으로 리뷰한다.
 
 ### 1. 핵심 스타일 가이드: typescript-eslint (recommended) + Airbnb/Google TS 관용구
 `tsconfig`의 **strict 모드**를 전제로, **typescript-eslint recommended** 룰과 범용 관용구(Airbnb / Google TypeScript Style)를 기준으로 본다. 검수 시 특히 아래 사항들을 집중적으로 확인하라:
