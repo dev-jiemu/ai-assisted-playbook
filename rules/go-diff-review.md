@@ -6,6 +6,7 @@ paths:
 # Project Guidelines (Go) - Git Diff Review Mode
 
 ## Build & Test Commands
+표준 Go 모듈 기준 기본값이다. 이 파일은 `~/.claude/rules/`에 연동되어 모든 프로젝트의 `*.go` 작업에 전역으로 로드되므로, 대상 프로젝트에 Makefile이나 커스텀 스크립트가 있다면 그쪽을 우선 확인한다.
 - Build: `go build ./...`
 - Test: `go test -v -race ./...`
 - Lint: `golangci-lint run`
