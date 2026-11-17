@@ -1,0 +1,8 @@
+{
+  "name": "ai-assisted-playbook",
+  "description": "dev-jiemu 개인 플러그인 마켓플레이스",
+  "owner": { "name": "dev-jiemu" },
+  "plugins": [
+    { "name": "playbook", "source": "./" }
+  ]
+}

@@ -1,6 +1,6 @@
 # 전역 지침 (Global Instructions)
 
-매 세션 자동 로드되는 핵심 지침. 상세 절차는 `rules/`와 `skills/`로 분리되어 있다.
+매 세션 자동 로드되는 핵심 지침. 언어별 스타일은 `rules/`, 작업 절차는 `skills/`, 코드 리뷰·레거시 분석·버전 변경 이력 조사는 `agents/`(서브에이전트)로 분리되어 있다.
 
 ## 기본 동작
 
@@ -61,43 +61,30 @@
 
 ## 공통 네이밍 규칙 (모든 언어 공통)
 
-모든 언어의 코드 리뷰·작성 시 아래 네이밍 규칙을 적용한다. 언어별 구체적 적용법은 각 `rules/*-code-review.md`에 명시되어 있다.
+모든 언어의 코드 리뷰·작성 시 아래 네이밍 규칙을 적용한다. 언어별 구체적 적용법은 각 `rules/*-style.md`에 명시되어 있다.
 
 - **코드 내부에서 쓰는 변수·필드** → **camelCase** (각 언어 관례 우선. 예: Go의 exported 식별자는 PascalCase)
 - **API 연동 등 외부와 데이터를 송수신하는 필드** → **snake_case**
   - 단, 언어 식별자 규칙을 깨면서 필드명을 직접 snake_case로 쓰지 말고 **직렬화 경계에서 매핑**한다 (Go struct tag, Java `@JsonProperty`/`@JsonNaming`, TS 외부 DTO 타입 분리 등).
 
-## 룰 라우팅 (Rules)
+## 언어별 스타일 (Rules)
 
-`rules/` 파일은 `~/.claude/rules/`에 연동되어 `paths` frontmatter에 맞는 파일을 다룰 때 자동 로드된다. 아래 요청인데 아직 로드되지 않았다면 해당 파일을 직접 읽고 따른다.
+`rules/*-style.md`는 `~/.claude/rules/`에 연동되어 `paths` frontmatter에 맞는 파일을 다룰 때 자동 로드된다. 코드 작성·수정 시 해당 언어 스타일을 따른다.
 
-- **Go 코드 전체 리뷰/검수/리팩토링** 요청 → `rules/go-code-review.md` (Uber Go Style Guide)
-- **Java 코드 전체 리뷰/검수/리팩토링** 요청 → `rules/java-code-review.md` (Google Java Style + Effective Java)
-- **TypeScript 코드 전체 리뷰/검수/리팩토링** 요청 → `rules/typescript-code-review.md` (typescript-eslint + Airbnb/Google TS)
-- **Git Diff / 특정 커밋 / PR 변경분 리뷰** 요청 → `rules/go-diff-review.md`
-  - 변경된 라인(`+`)과 인접 컨텍스트만 검수. 전체 파일 분석 금지. (현재 Go 전용)
+- Go → `rules/go-style.md` (Uber Go Style Guide)
+- Java → `rules/java-style.md` (Google Java Style + Effective Java)
+- TypeScript → `rules/typescript-style.md` (typescript-eslint + Airbnb/Google TS)
 
-모든 리뷰는 지적을 🔴 [CRITICAL] / 🟡 [WARNING] / 🔵 [SUGGESTION/NIT] 으로 분류하고, 위 공통 네이밍 규칙을 함께 적용한다.
+## 코드 리뷰 위임 (Subagents)
 
-### 검수 결과 출력 양식 (공통)
+코드 리뷰·검수 요청은 메인 대화에서 직접 하지 않고 `playbook` 플러그인의 리뷰 서브에이전트에 위임한다. 리뷰 절차·중요도 분류·출력 양식은 각 에이전트에 있다.
 
-`go-code-review.md` / `java-code-review.md` / `typescript-code-review.md`로 하는 전체 리뷰는 아래 양식을 공통으로 쓴다 (언어별 세부 기준은 각 rule 파일 참고, `go-diff-review.md`의 Diff 전용 양식은 별도).
+- Go 코드 전체 리뷰 / Diff·커밋·PR 리뷰 → `playbook:go-reviewer`
+- Java 코드 전체 리뷰 / Diff·커밋·PR 리뷰 → `playbook:java-reviewer`
+- TypeScript 코드 전체 리뷰 / Diff·커밋·PR 리뷰 → `playbook:ts-reviewer`
+- 여러 언어가 섞인 변경이면 해당 언어 에이전트에 각각 병렬로 위임한다.
 
-리뷰 결과는 개발자가 바로 반영할 수 있도록 항상 아래 마크다운 포맷으로 `docs/reviews/YYYYMMDD-code-review.md` 형태로 저장하라. 지적 사항이 없다면 가벼운 칭찬과 함께 통과시켜라.
-
-#### 🛠️ 코드 리뷰 요약
-(전반적인 코드 품질과 해당 언어 스타일 가이드 준수 여부를 1~2줄로 요약)
-
-#### 🔍 세부 검수 사항
-- **[중요도 태그] 파일명 & 라인 위치:** 지적 내용 핵심 요약
-    - **이유:** 해당 언어 스타일 가이드 또는 Best Practice 관점에서 왜 수정해야 하는지 설명
-    - **수정 제안 (Before / After):**
-      ```
-      // Before (기존 코드의 문제 구간)
-      ...
-      // After (개선된 제안 코드)
-      ...
-      ```
+위임 프롬프트에는 리뷰 대상(파일·패키지 경로, 또는 커밋 SHA / base 브랜치)을 명시한다. 에이전트가 반환한 저장 경로와 요약을 사용자에게 전달한다.
 
 ## 산출물 규칙
 

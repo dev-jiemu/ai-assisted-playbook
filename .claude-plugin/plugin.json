@@ -1,0 +1,6 @@
+{
+  "name": "playbook",
+  "description": "지에뮤 개인 스킬·코드리뷰 서브에이전트 모음 (ai-assisted-playbook)",
+  "author": { "name": "dev-jiemu" },
+  "repository": "https://github.com/dev-jiemu/ai-assisted-playbook"
+}
