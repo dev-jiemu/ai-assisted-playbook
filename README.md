@@ -15,7 +15,8 @@ Claude Code 전역 프롬프트/지침 백업. 스킬·서브에이전트는 **�
 │   ├── java-reviewer.md           #  - Java 전체 리뷰 + Diff/커밋/PR 리뷰
 │   ├── ts-reviewer.md             #  - TypeScript 전체 리뷰 + Diff/커밋/PR 리뷰
 │   ├── legacy-analysis.md         #  - 레거시 코드베이스 구조·배포 분석 → docs/analysis/
-│   └── version-upgrade-history.md #  - As-Is → To-Be 릴리즈 노트·Breaking Changes 조사
+│   ├── version-upgrade-history.md #  - As-Is → To-Be 릴리즈 노트·Breaking Changes 조사
+│   └── frontend-dev.md            #  - 브리프 기반 웹 퍼블리싱·프런트엔드 구현 (질문은 frontend-brief 스킬)
 ├── CLAUDE.md                      # [심링크] 매 세션 자동 로드되는 핵심 지침
 └── rules/                         # [심링크] 언어별 스타일 (paths 매칭 시 자동 로드)
     ├── go-style.md
@@ -51,19 +52,22 @@ Claude Code 전역 프롬프트/지침 백업. 스킬·서브에이전트는 **�
 | `go-reviewer` / `java-reviewer` / `ts-reviewer` | "현재 diff 리뷰해줘", "`abc123` 커밋 리뷰", "`main` 대비 이 브랜치 리뷰", "`<패키지 경로>` 전체 리뷰" | 리뷰 대상: 파일·패키지 경로, 또는 커밋 SHA / base 브랜치 | `docs/reviews/YYYYMMDD-code-review.md` 저장 + 중요도별 개수·🔴 요약 반환 |
 | `legacy-analysis` | "이 프로젝트 분석해줘", "온보딩 문서 만들어줘" | (선택) 분석 대상 하위 경로, 특히 볼 영역 | `docs/analysis/00~06-*.md` 생성 + 구조 요약·"여기부터 보세요"·`⚠️ 확인 필요` 목록 반환 |
 | `version-upgrade-history` | "Wowza 4.8.18 → 4.9.7 변경 이력 정리해줘" | 대상 소프트웨어, As-Is / To-Be 버전 (As-Is 생략 시 의존성 파일에서 탐색) | 버전별 Changelog·Breaking Changes 리포트 반환 (출처 URL 포함) |
+| `frontend-dev` | 직접 호출하지 않고 `/playbook:frontend-brief`로 시작 | 브리프 경로(`docs/frontend/*-brief.md`), 프로젝트 루트 | 구현 + build/lint/typecheck 검증 후 변경 파일·실행 방법·검증 결과 반환. 정보가 부족하면 구현 전 확인 질문 반환 |
 
 - 리뷰 에이전트는 **대상 코드를 수정하지 않는다** (`Edit` 도구 없음).
 - 여러 언어가 섞인 변경이면 언어별 리뷰 에이전트에 각각 위임된다 (CLAUDE.md "코드 리뷰 위임").
+- 프런트엔드 작업은 **스킬(질문) → 에이전트(구현)** 2단계다. 서브에이전트는 사용자에게 질문할 수 없어서, `frontend-brief` 스킬이 메인 대화에서 질문으로 요구사항을 확정해 브리프를 만들고 `frontend-dev`에 위임한다. 에이전트가 확인 질문을 돌려주면 스킬이 사용자에게 다시 묻는다.
 
 ### 스킬
 
 `/playbook:<name>`으로 호출하거나 자연어로 요청한다. 입력창에 `/playbook:`을 치면 목록이 나온다.
 
 - `pr-writer`는 대화 맥락(문제 현상·논의 내용)을 근거로 쓰므로 **작업한 대화 안에서** 호출한다.
+- `frontend-brief`는 웹 페이지·UI 구현 요청의 시작점이다. 프로젝트에서 알 수 있는 건(스택·스타일링 등) 묻지 않고, 나머지를 선택지 질문으로 받은 뒤 `docs/frontend/YYYYMMDD-<slug>-brief.md`를 만들고 승인받으면 `frontend-dev`에 위임한다.
 
 ### 설치 확인
 
-- `/agents` → 플러그인 에이전트 5개가 `playbook:` 이름으로 보이는지
+- `/agents` → 플러그인 에이전트 6개가 `playbook:` 이름으로 보이는지
 - 입력창에 `@agent-playbook:` → 에이전트만, `/playbook:` → 스킬만 자동완성됨
 - 셸에서 `claude plugin list` → `playbook@ai-assisted-playbook`이 `enabled`, `Read from:`이 이 레포 경로인지
 
