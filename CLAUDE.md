@@ -10,6 +10,21 @@
 - 불확실하거나 죽은 코드로 의심되는 부분은 단정하지 말고 `⚠️ 확인 필요`로 표시한다.
 - 코드가 수정되었을 경우 push 및 commit 하지 말고 사용자에게 검토를 요청한다.
 
+## 코드 탐색 (codebase-memory MCP)
+
+codebase-memory MCP가 연결된 세션에서는 코드 읽기·분석 시 인덱스를 Grep/Glob/전체 Read보다 먼저 사용한다.
+
+- **시작 시**: `list_projects` / `index_status`로 현재 프로젝트 인덱스 여부를 확인한다. 없으면 `index_repository`, 오래됐으면 `detect_changes`로 갱신 후 사용한다.
+- **용도별 툴**:
+  - 전체 구조·패키지 파악 → `get_architecture`
+  - 함수·타입·심볼 위치 → `search_graph`
+  - 호출자/피호출자, 실행 흐름 추적 → `trace_path`
+  - 특정 함수 본문 → `get_code_snippet` (파일 전체 Read 대신)
+  - 텍스트 패턴 → `search_code`
+- **Fallback**: 설정 파일(YAML, Helm values, .env 등), 문자열 리터럴, 로그 메시지, 주석, 인덱싱되지 않은 프로젝트는 Grep/Read를 사용한다.
+- **근거 규칙과의 관계**: 인덱스는 위치를 찾는 용도다. 서술의 근거는 실제 파일 경로로 명시하고, 인덱스 결과와 실제 코드가 다르면 인덱스가 오래된 것으로 간주해 재인덱싱한다.
+- **수정 직전**에는 반드시 Read로 실제 파일 내용을 확인한다.
+
 ## 행동 지침
 ### 1. 구현 전 사고 (Think Before Coding)
 가정하지 않는다. 모호함을 숨기지 않는다. 트레이드오프를 명확히 밝힌다.
